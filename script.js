@@ -6,8 +6,12 @@ async function fetchData() {
     try {
         const response = await fetch(SHEET_URL);
         const text = await response.text();
-        const rows = text.trim().split("\n").slice(1);  // Trim and split correctly
+        console.log("Raw CSV Data:", text); // Log the raw CSV data
+
+        const rows = text.trim().split("\n").slice(1);  
         const data = rows.map(row => row.split(","));
+
+        console.log("Parsed Data:", data); // Log parsed data
 
         let timestamps = [];
         let voltage = [], current = [], powerFactor = [], energy = [];
@@ -22,12 +26,15 @@ async function fetchData() {
             }
         });
 
+        console.log("Processed Data:", { timestamps, voltage, current, powerFactor, energy }); // Log processed data
+
         updateCharts(timestamps, voltage, current, powerFactor, energy);
         checkAlerts(voltage, current, powerFactor);
     } catch (error) {
         console.error("Error fetching data:", error);
     }
 }
+
 
 function updateCharts(timestamps, voltage, current, powerFactor, energy) {
     createChart('voltageChart', 'Voltage (Vrms)', timestamps, voltage);
