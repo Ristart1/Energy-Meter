@@ -1,4 +1,4 @@
-const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQEAl5IM4a7jpC8heq8feTrKD1lOE3bY2tgkATvgqR_qCqLYvSP65l1tcSsKao9l-LsM98auw4Vg_oh/pub?output=csv"";  // Replace with your Google Sheets CSV URL
+const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQEAl5IM4a7jpC8heq8feTrKD1lOE3bY2tgkATvgqR_qCqLYvSP65l1tcSsKao9l-LsM98auw4Vg_oh/pub?output=csv";  // Replace with your Google Sheets CSV URL
 
 let charts = {}; // Store chart instances to avoid duplication
 
@@ -6,7 +6,7 @@ async function fetchData() {
     try {
         const response = await fetch(SHEET_URL);
         const text = await response.text();
-        const rows = text.split("\n").slice(1);
+        const rows = text.trim().split("\n").slice(1);  // Trim and split correctly
         const data = rows.map(row => row.split(","));
 
         let timestamps = [];
