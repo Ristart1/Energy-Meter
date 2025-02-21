@@ -38,21 +38,46 @@ function updateCharts(timestamps, voltage, current, powerFactor, energy) {
 
 function createChart(canvasId, label, labels, data) {
     const canvas = document.getElementById(canvasId);
+
+    // Ensure the canvas exists
+    if (!canvas) {
+        console.error(`Canvas with ID '${canvasId}' not found.`);
+        return;
+    }
+
     const ctx = canvas.getContext('2d');
 
-    // Destroy previous chart if it exists
+    // Destroy previous chart instance if it exists
     if (charts[canvasId]) {
         charts[canvasId].destroy();
     }
 
-    // Create a new chart and store it
+    // Ensure data is valid before creating the chart
+    if (data.length === 0 || labels.length === 0) {
+        console.warn(`No data available for ${label}.`);
+        return;
+    }
+
+    // Create and store the new chart
     charts[canvasId] = new Chart(ctx, {
         type: 'line',
         data: {
             labels: labels,
-            datasets: [{ label: label, data: data, borderColor: 'blue', borderWidth: 2, fill: false }]
+            datasets: [{
+                label: label,
+                data: data,
+                borderColor: 'blue',
+                borderWidth: 2,
+                fill: false
+            }]
         },
-        options: { responsive: true, maintainAspectRatio: false }
+        options: { 
+            responsive: true, 
+            maintainAspectRatio: false,
+            animation: {
+                duration: 0 // Disable animation to avoid flickering
+            }
+        }
     });
 }
 
