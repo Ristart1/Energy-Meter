@@ -1,5 +1,5 @@
 
-const SHEET_URL = "YOUR_GOOGLE_SHEETS_PUBLIC_CSV_URL";  // Replace with Google Sheets CSV URL
+const SHEET_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQEAl5IM4a7jpC8heq8feTrKD1lOE3bY2tgkATvgqR_qCqLYvSP65l1tcSsKao9l-LsM98auw4Vg_oh/pub?output=csv";  // Replace with Google Sheets CSV URL
 
 async function fetchData() {
     const response = await fetch(SHEET_URL);
