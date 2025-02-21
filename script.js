@@ -18,7 +18,18 @@ async function fetchData() {
 
         data.forEach(row => {
             if (row.length > 5) {
-                timestamps.push(new Date(row[0]).toLocaleTimeString());
+                let rawTimestamp = row[0].trim(); // Example: "22/02/2025 00:56:38"
+                
+                // Convert "DD/MM/YYYY HH:MM:SS" to a valid JavaScript format
+                let parts = rawTimestamp.split(" ");
+                let dateParts = parts[0].split("/"); // ["22", "02", "2025"]
+                let timePart = parts[1]; // "00:56:38"
+
+                let formattedDate = `${dateParts[2]}-${dateParts[1]}-${dateParts[0]}T${timePart}`; // "2025-02-22T00:56:38"
+                let validDate = new Date(formattedDate); 
+
+                timestamps.push(validDate.toLocaleTimeString()); // Show only time on the graph
+
                 voltage.push(parseFloat(row[1]));
                 current.push(parseFloat(row[2]));
                 powerFactor.push(parseFloat(row[4]));
