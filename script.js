@@ -48,11 +48,13 @@ async function fetchData() {
 
 
 function updateCharts(timestamps, voltage, current, powerFactor, energy) {
+    console.log("Final Data for Charts:", { timestamps, voltage, current, powerFactor, energy }); // Debugging
     createChart('voltageChart', 'Voltage (Vrms)', timestamps, voltage);
     createChart('currentChart', 'Current (Irms)', timestamps, current);
     createChart('powerFactorChart', 'Power Factor', timestamps, powerFactor);
     createChart('energyChart', 'Energy (kWh)', timestamps, energy);
 }
+
 
 function createChart(canvasId, label, labels, data) {
     const canvas = document.getElementById(canvasId);
