@@ -4,16 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Smart Energy Monitor</title>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <h1>Smart Energy Monitoring Dashboard</h1>
     <p id="alert" class="alert"></p>
-    <canvas id="voltageChart"></canvas>
-    <canvas id="currentChart"></canvas>
-    <canvas id="powerFactorChart"></canvas>
-    <canvas id="energyChart"></canvas>
+
+    <div id="data-container">
+        <p><strong>Voltage (Vrms):</strong> <span id="voltage">--</span></p>
+        <p><strong>Current (Irms):</strong> <span id="current">--</span></p>
+        <p><strong>Power Factor:</strong> <span id="powerFactor">--</span></p>
+        <p><strong>Energy (kWh):</strong> <span id="energy">--</span></p>
+    </div>
 
     <script src="script.js"></script>
 </body>
