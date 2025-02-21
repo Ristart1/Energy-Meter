@@ -67,10 +67,13 @@ function createChart(canvasId, label, labels, data) {
 
     const ctx = canvas.getContext('2d');
 
-    // Destroy previous chart instance if it exists
+    // Destroy previous chart if it exists
     if (charts[canvasId]) {
         charts[canvasId].destroy();
     }
+
+    // Force redrawing the canvas
+    canvas.width = canvas.width; // Clears the canvas
 
     // Ensure data is valid before creating the chart
     if (data.length === 0 || labels.length === 0) {
@@ -99,7 +102,10 @@ function createChart(canvasId, label, labels, data) {
             }
         }
     });
+
+    console.log(`Chart updated: ${canvasId}`);
 }
+
 
 function checkAlerts(voltage, current, powerFactor) {
     let alertMessage = "";
