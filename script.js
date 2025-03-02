@@ -1,4 +1,4 @@
-const SHEET_API_URL = "YOUR_GOOGLE_APPS_SCRIPT_URL_HERE"; // Replace with your deployed script URL
+const SHEET_API_URL = "https://script.google.com/macros/s/AKfycbwOGH7woP5lqAM8diEnEv7a-qfhIy1C1XSE1WV-lHIp9n88ydK-UB6sO-scWfeZu89h4g/exec"; // Replace with your deployed script URL
 
 async function login() {
     let username = document.getElementById("username").value;
