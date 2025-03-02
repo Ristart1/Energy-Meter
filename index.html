@@ -7,14 +7,25 @@
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <h1>Smart Energy Monitoring Dashboard</h1>
-    <p id="alert" class="alert"></p>
+    <div id="login-container">
+        <h2>Login</h2>
+        <input type="text" id="username" placeholder="Username">
+        <input type="password" id="password" placeholder="Password">
+        <button onclick="login()">Login</button>
+        <p id="login-error" class="error"></p>
+    </div>
 
-    <div id="data-container">
-        <p><strong>Voltage (Vrms):</strong> <span id="voltage">--</span></p>
-        <p><strong>Current (Irms):</strong> <span id="current">--</span></p>
-        <p><strong>Power Factor:</strong> <span id="powerFactor">--</span></p>
-        <p><strong>Energy (kWh):</strong> <span id="energy">--</span></p>
+    <div id="dashboard" style="display: none;">
+        <h1>Smart Energy Monitoring Dashboard</h1>
+        <button onclick="logout()">Logout</button>
+        <p id="alert" class="alert"></p>
+
+        <div id="data-container">
+            <p><strong>Voltage (Vrms):</strong> <span id="voltage">--</span></p>
+            <p><strong>Current (Irms):</strong> <span id="current">--</span></p>
+            <p><strong>Power Factor:</strong> <span id="powerFactor">--</span></p>
+            <p><strong>Energy (kWh):</strong> <span id="energy">--</span></p>
+        </div>
     </div>
 
     <script src="script.js"></script>
