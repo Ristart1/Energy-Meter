@@ -30,7 +30,7 @@ async function handleAuth() {
     try {
         let response = await fetch(SHEET_API_URL, {
             method: "POST",
-            mode: "cors", // Enable CORS
+            mode: "cors", // Ensures cross-origin requests are allowed
             headers: {
                 "Content-Type": "application/json"
             },
@@ -55,7 +55,6 @@ async function handleAuth() {
         document.getElementById("login-error").innerText = "Server error. Try again!";
     }
 }
-
 
 function logout() {
     localStorage.removeItem("loggedInUser");
