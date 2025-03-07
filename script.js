@@ -30,7 +30,7 @@ async function handleAuth() {
     try {
         let response = await fetch(SHEET_API_URL, {
             method: "POST",
-            mode: "cors", // Ensure CORS mode is enabled
+            mode: "cors", // Enable CORS
             headers: {
                 "Content-Type": "application/json"
             },
@@ -40,13 +40,15 @@ async function handleAuth() {
         let resultText = await response.text(); // Read raw text response
         console.log("Response from API:", resultText); // Debugging output
 
-        if (resultText.trim().toLowerCase() === "success") {
+        let result = JSON.parse(resultText); // Parse JSON response
+
+        if (result.status === "success") {
             localStorage.setItem("loggedInUser", username);
             document.getElementById("login-container").style.display = "none";
             document.getElementById("dashboard").style.display = "block";
             fetchData();
         } else {
-            document.getElementById("login-error").innerText = resultText;
+            document.getElementById("login-error").innerText = result.message;
         }
     } catch (error) {
         console.error("Network Error:", error);
