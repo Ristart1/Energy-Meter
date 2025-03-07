@@ -33,19 +33,24 @@ p {
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
     display: inline-block;
     text-align: center;
+    width: 300px;
 }
 input {
     display: block;
     margin: 10px auto;
     padding: 10px;
     width: 80%;
+    border: 1px solid #ccc;
+    border-radius: 5px;
 }
 button {
     padding: 10px 20px;
     background: #28a745;
     color: white;
     border: none;
+    border-radius: 5px;
     cursor: pointer;
+    margin-top: 10px;
 }
 button:hover {
     background: #218838;
@@ -53,4 +58,12 @@ button:hover {
 .error {
     color: red;
     font-weight: bold;
+}
+a {
+    text-decoration: none;
+    font-weight: bold;
+    color: #4a90e2;
+}
+a:hover {
+    text-decoration: underline;
 }
