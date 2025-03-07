@@ -16,13 +16,12 @@ function toggleAuthMode(event) {
     document.getElementById("toggle-link").innerText = isSignUpMode ? "Log In" : "Sign Up";
 }
 
-// ✅ Handles Login and Registration
+// ✅ Handles Login and Registration with Better Debugging
 async function handleAuth() {
     let username = document.getElementById("username").value.trim();
     let password = document.getElementById("password").value.trim();
     let errorMessage = document.getElementById("login-error");
 
-    // ✅ Basic validation
     if (!username || !password) {
         errorMessage.innerText = "Please enter a username and password!";
         return;
@@ -31,6 +30,7 @@ async function handleAuth() {
     let action = isSignUpMode ? "register" : "login";
 
     try {
+        console.log("Sending request to API...");
         let response = await fetch(SHEET_API_URL, {
             method: "POST",
             mode: "cors",
@@ -40,12 +40,14 @@ async function handleAuth() {
             body: JSON.stringify({ username, password, action })
         });
 
+        console.log("Response status:", response.status);
+
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
         }
 
-        let result = await response.json(); // Read and parse JSON response
-        console.log("Response from API:", result); // Debugging output
+        let result = await response.json();
+        console.log("API Response:", result);
 
         if (result.status === "success") {
             localStorage.setItem("loggedInUser", username);
