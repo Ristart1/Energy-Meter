@@ -1,4 +1,4 @@
-const SHEET_API_URL = "https://script.google.com/macros/s/AKfycbwOGH7woP5lqAM8diEnEv7a-qfhIy1C1XSE1WV-lHIp9n88ydK-UB6sO-scWfeZu89h4g/exec"; // Replace with your Google Apps Script URL
+const SHEET_API_URL = "https://script.google.com/macros/s/AKfycbyW-rGW9hF7QlNQy36LxyTQRZXRPN2iChf595zzzEH2-uEebx5S9SFmoTloDhZ-ewjz1w/exec"; // Replace with your Google Apps Script URL
 
 let isSignUpMode = false; // Track if user is signing up
 
