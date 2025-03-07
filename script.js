@@ -17,8 +17,8 @@ function toggleAuthMode(event) {
 }
 
 async function handleAuth() {
-    let username = document.getElementById("username").value;
-    let password = document.getElementById("password").value;
+    let username = document.getElementById("username").value.trim();
+    let password = document.getElementById("password").value.trim();
 
     if (!username || !password) {
         document.getElementById("login-error").innerText = "Please enter a username and password!";
@@ -30,28 +30,30 @@ async function handleAuth() {
     try {
         let response = await fetch(SHEET_API_URL, {
             method: "POST",
-            body: JSON.stringify({ username: username, password: password, action: endpoint }),
-            headers: { "Content-Type": "application/json" }
+            mode: "cors", // Ensure CORS mode is enabled
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ username, password, action: endpoint })
         });
 
-        let result = await response.text();
+        let resultText = await response.text(); // Read raw text response
+        console.log("Response from API:", resultText); // Debugging output
 
-        if (result === "success") {
+        if (resultText.trim().toLowerCase() === "success") {
             localStorage.setItem("loggedInUser", username);
             document.getElementById("login-container").style.display = "none";
             document.getElementById("dashboard").style.display = "block";
             fetchData();
         } else {
-            document.getElementById("login-error").innerText = 
-                result === "user_exists" ? "User already exists!" : 
-                result === "incorrect_password" ? "Wrong Password!" : 
-                "User Not Found!";
+            document.getElementById("login-error").innerText = resultText;
         }
     } catch (error) {
-        console.error("Error:", error);
-        document.getElementById("login-error").innerText = "Network error. Try again!";
+        console.error("Network Error:", error);
+        document.getElementById("login-error").innerText = "Server error. Try again!";
     }
 }
+
 
 function logout() {
     localStorage.removeItem("loggedInUser");
