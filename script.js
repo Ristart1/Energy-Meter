@@ -1,4 +1,4 @@
-const SHEET_API_URL = "https://script.google.com/macros/s/AKfycbzJBI0ZcrZMmrA6wLc3F0M8fWqLU4nCpUK9pUr2S6nY_rotyVIqDN_wU82tQ42Inpzz0g/exec"; // Replace with your Google Apps Script URL
+const SHEET_API_URL = "https://script.google.com/macros/s/AKfycbzJBI0ZcrZMmrA6wLc3F0M8fWqLU4nCpUK9pUr2S6nY_rotyVIqDN_wU82tQ42Inpzz0g/exec"; // Replace with your actual Google Apps Script URL
 
 let isSignUpMode = false; // Track if user is signing up
 
@@ -16,31 +16,36 @@ function toggleAuthMode(event) {
     document.getElementById("toggle-link").innerText = isSignUpMode ? "Log In" : "Sign Up";
 }
 
+// ✅ Handles Login and Registration
 async function handleAuth() {
     let username = document.getElementById("username").value.trim();
     let password = document.getElementById("password").value.trim();
+    let errorMessage = document.getElementById("login-error");
 
+    // ✅ Basic validation
     if (!username || !password) {
-        document.getElementById("login-error").innerText = "Please enter a username and password!";
+        errorMessage.innerText = "Please enter a username and password!";
         return;
     }
 
-    let endpoint = isSignUpMode ? "register" : "login";
+    let action = isSignUpMode ? "register" : "login";
 
     try {
         let response = await fetch(SHEET_API_URL, {
             method: "POST",
-            mode: "cors", // Ensures cross-origin requests are allowed
+            mode: "cors",
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({ username, password, action: endpoint })
+            body: JSON.stringify({ username, password, action })
         });
 
-        let resultText = await response.text(); // Read raw text response
-        console.log("Response from API:", resultText); // Debugging output
+        if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+        }
 
-        let result = JSON.parse(resultText); // Parse JSON response
+        let result = await response.json(); // Read and parse JSON response
+        console.log("Response from API:", result); // Debugging output
 
         if (result.status === "success") {
             localStorage.setItem("loggedInUser", username);
@@ -48,20 +53,22 @@ async function handleAuth() {
             document.getElementById("dashboard").style.display = "block";
             fetchData();
         } else {
-            document.getElementById("login-error").innerText = result.message;
+            errorMessage.innerText = result.message || "An error occurred!";
         }
     } catch (error) {
         console.error("Network Error:", error);
-        document.getElementById("login-error").innerText = "Server error. Try again!";
+        errorMessage.innerText = "Server error. Try again!";
     }
 }
 
+// ✅ Handles Logout
 function logout() {
     localStorage.removeItem("loggedInUser");
     document.getElementById("login-container").style.display = "block";
     document.getElementById("dashboard").style.display = "none";
 }
 
+// ✅ Ensures user remains logged in on page reload
 window.onload = function() {
     if (localStorage.getItem("loggedInUser")) {
         document.getElementById("login-container").style.display = "none";
@@ -70,4 +77,7 @@ window.onload = function() {
     }
 };
 
-// Fetch data function remains the same...
+// ✅ Fetch data function (ensure your fetch logic is correctly implemented)
+async function fetchData() {
+    console.log("Fetching user data...");
+}
