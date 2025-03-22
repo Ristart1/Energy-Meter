@@ -1,37 +1,61 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Smart Energy Monitor</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8" />
+  <title>Smart Energy Meter</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-    <div id="login-container">
-        <h2 id="form-title">Login</h2>
-        <input type="text" id="username" placeholder="Username">
-        <input type="password" id="password" placeholder="Password">
-        <button id="submit-btn">Login</button>
-        <p id="login-error" class="error"></p>
-        <p>
-            <span id="toggle-text">Don't have an account?</span> 
-            <a href="#" id="toggle-link">Sign Up</a>
-        </p>
+
+<!-- A simple container for the app -->
+<div id="app">
+
+  <!-- Login form -->
+  <div id="loginView">
+    <h1>Login</h1>
+    <input type="text" id="username" placeholder="Username" />
+    <input type="password" id="password" placeholder="Password" />
+    <button id="loginBtn">Login</button>
+  </div>
+
+  <!-- Main content (hidden until logged in) -->
+  <div id="mainView" style="display:none;">
+    <h1>Energy Consumption</h1>
+    <button id="logoutBtn">Logout</button>
+    
+    <div id="dataArea">
+      <!-- We will inject a table or charts here -->
+      <h2>Branch Circuits Overview</h2>
+      <table id="consumptionTable" border="1">
+        <!-- The table header -->
+        <thead>
+          <tr>
+            <th>Timestamp</th>
+            <th>Voltage</th>
+            <th>Branch 1 Current</th>
+            <th>Branch 1 Power</th>
+            <th>Branch 1 kWh</th>
+            <th>Branch 2 Current</th>
+            <th>Branch 2 Power</th>
+            <th>Branch 2 kWh</th>
+            <th>Branch 3 Current</th>
+            <th>Branch 3 Power</th>
+            <th>Branch 3 kWh</th>
+            <th>Branch 4 Current</th>
+            <th>Branch 4 Power</th>
+            <th>Branch 4 kWh</th>
+            <th>Total Consumption</th>
+            <th>Cost</th>
+          </tr>
+        </thead>
+        <!-- The table body (dynamically populated by script.js) -->
+        <tbody id="tableBody"></tbody>
+      </table>
     </div>
+  </div>
 
-    <div id="dashboard" style="display: none;">
-        <h1>Smart Energy Monitoring Dashboard</h1>
-        <button onclick="logout()">Logout</button>
-        <p id="alert" class="alert"></p>
+</div>
 
-        <div id="data-container">
-            <p><strong>Voltage (Vrms):</strong> <span id="voltage">--</span></p>
-            <p><strong>Current (Irms):</strong> <span id="current">--</span></p>
-            <p><strong>Power Factor:</strong> <span id="powerFactor">--</span></p>
-            <p><strong>Energy (kWh):</strong> <span id="energy">--</span></p>
-        </div>
-    </div>
-
-    <script src="script.js?v=2"></script> <!-- Force fresh script load -->
+<script src="script.js"></script>
 </body>
 </html>
