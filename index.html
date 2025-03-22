@@ -2,60 +2,44 @@
 <html>
 <head>
   <meta charset="UTF-8" />
-  <title>Smart Energy Meter</title>
+  <title>Smart Energy Meter Data</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
 
-<!-- A simple container for the app -->
-<div id="app">
-
-  <!-- Login form -->
-  <div id="loginView">
-    <h1>Login</h1>
-    <input type="text" id="username" placeholder="Username" />
-    <input type="password" id="password" placeholder="Password" />
-    <button id="loginBtn">Login</button>
-  </div>
-
-  <!-- Main content (hidden until logged in) -->
-  <div id="mainView" style="display:none;">
-    <h1>Energy Consumption</h1>
-    <button id="logoutBtn">Logout</button>
+  <div id="app">
+    <h1>Smart Energy Meter Data</h1>
+    <button id="fetchBtn">Fetch Latest Data</button>
     
-    <div id="dataArea">
-      <!-- We will inject a table or charts here -->
-      <h2>Branch Circuits Overview</h2>
-      <table id="consumptionTable" border="1">
-        <!-- The table header -->
-        <thead>
-          <tr>
-            <th>Timestamp</th>
-            <th>Voltage</th>
-            <th>Branch 1 Current</th>
-            <th>Branch 1 Power</th>
-            <th>Branch 1 kWh</th>
-            <th>Branch 2 Current</th>
-            <th>Branch 2 Power</th>
-            <th>Branch 2 kWh</th>
-            <th>Branch 3 Current</th>
-            <th>Branch 3 Power</th>
-            <th>Branch 3 kWh</th>
-            <th>Branch 4 Current</th>
-            <th>Branch 4 Power</th>
-            <th>Branch 4 kWh</th>
-            <th>Total Consumption</th>
-            <th>Cost</th>
-          </tr>
-        </thead>
-        <!-- The table body (dynamically populated by script.js) -->
-        <tbody id="tableBody"></tbody>
-      </table>
-    </div>
+    <p id="statusMessage"></p>
+
+    <table id="dataTable" border="1">
+      <thead>
+        <tr>
+          <th>Timestamp</th>
+          <th>Voltage</th>
+          <th>Current(1)</th>
+          <th>Power(1)</th>
+          <th>Energy(1)</th>
+          <th>Current(2)</th>
+          <th>Power(2)</th>
+          <th>Energy(2)</th>
+          <th>Current(3)</th>
+          <th>Power(3)</th>
+          <th>Energy(3)</th>
+          <th>Current(4)</th>
+          <th>Power(4)</th>
+          <th>Energy(4)</th>
+          <th>Total Consumption</th>
+          <th>Cost</th>
+        </tr>
+      </thead>
+      <tbody id="tableBody">
+        <!-- Data will be injected here -->
+      </tbody>
+    </table>
   </div>
 
-</div>
-
-<script src="script.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
