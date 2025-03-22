@@ -1,85 +1,131 @@
-const SHEET_API_URL = "https://script.google.com/macros/s/AKfycbzJBI0ZcrZMmrA6wLc3F0M8fWqLU4nCpUK9pUr2S6nY_rotyVIqDN_wU82tQ42Inpzz0g/exec"; // Replace with your actual Google Apps Script URL
+/**************
+ * BASIC LOGIN
+ **************/
+const validUsername = "demo"; // Hard-coded example
+const validPassword = "demo123"; // Hard-coded example
 
-let isSignUpMode = false; // Track if user is signing up
+const loginBtn = document.getElementById("loginBtn");
+const logoutBtn = document.getElementById("logoutBtn");
 
-document.addEventListener("DOMContentLoaded", function() {
-    document.getElementById("submit-btn").addEventListener("click", handleAuth);
-    document.getElementById("toggle-link").addEventListener("click", toggleAuthMode);
+const loginView = document.getElementById("loginView");
+const mainView = document.getElementById("mainView");
+
+/**
+ * On page load, check if the user is "logged in" 
+ * in localStorage (for a simple approach).
+ */
+window.addEventListener("DOMContentLoaded", () => {
+  const isLoggedIn = localStorage.getItem("isLoggedIn");
+  if (isLoggedIn === "true") {
+    showMainView();
+    fetchDataAndPopulateTable();
+  }
 });
 
-function toggleAuthMode(event) {
-    event.preventDefault(); // Prevent default link behavior
-    isSignUpMode = !isSignUpMode;
-    document.getElementById("form-title").innerText = isSignUpMode ? "Sign Up" : "Login";
-    document.getElementById("submit-btn").innerText = isSignUpMode ? "Sign Up" : "Login";
-    document.getElementById("toggle-text").innerText = isSignUpMode ? "Already have an account?" : "Don't have an account?";
-    document.getElementById("toggle-link").innerText = isSignUpMode ? "Log In" : "Sign Up";
+loginBtn.addEventListener("click", () => {
+  const usernameInput = document.getElementById("username");
+  const passwordInput = document.getElementById("password");
+  
+  if (
+    usernameInput.value === validUsername && 
+    passwordInput.value === validPassword
+  ) {
+    // Save in local storage
+    localStorage.setItem("isLoggedIn", "true");
+    showMainView();
+    fetchDataAndPopulateTable();
+  } else {
+    alert("Invalid credentials!");
+  }
+});
+
+logoutBtn.addEventListener("click", () => {
+  localStorage.setItem("isLoggedIn", "false");
+  showLoginView();
+});
+
+function showMainView() {
+  loginView.style.display = "none";
+  mainView.style.display = "block";
 }
 
-// ✅ Handles Login and Registration with Improved Debugging
-async function handleAuth() {
-    let username = document.getElementById("username").value.trim();
-    let password = document.getElementById("password").value.trim();
-    let errorMessage = document.getElementById("login-error");
-
-    if (!username || !password) {
-        errorMessage.innerText = "Please enter a username and password!";
-        return;
-    }
-
-    let action = isSignUpMode ? "register" : "login";
-
-    try {
-        console.log("📡 Sending request to API...");
-        let response = await fetch(SHEET_API_URL, {
-            method: "POST",
-            mode: "cors",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({ username, password, action })
-        });
-
-        console.log("📡 Response status:", response.status);
-
-        if (!response.ok) {
-            throw new Error(`HTTP error! Status: ${response.status}`);
-        }
-
-        let result = await response.json();
-        console.log("📡 API Response:", result);
-
-        if (result.status === "success") {
-            localStorage.setItem("loggedInUser", username);
-            document.getElementById("login-container").style.display = "none";
-            document.getElementById("dashboard").style.display = "block";
-            fetchData();
-        } else {
-            errorMessage.innerText = result.message || "An error occurred!";
-        }
-    } catch (error) {
-        console.error("❌ Network Error:", error);
-        errorMessage.innerText = "Server error. Try again!";
-    }
+function showLoginView() {
+  loginView.style.display = "block";
+  mainView.style.display = "none";
 }
 
-// ✅ Handles Logout
-function logout() {
-    localStorage.removeItem("loggedInUser");
-    document.getElementById("login-container").style.display = "block";
-    document.getElementById("dashboard").style.display = "none";
+/***********************
+ * FETCH AND DISPLAY DATA
+ ***********************/
+function fetchDataAndPopulateTable() {
+  // TODO: Replace this URL with your published Apps Script web app URL
+  // Make sure to append ?mode=read to trigger the JSON return
+  const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbzZMUdhtpNagkiSqIcUebkJy-jMgcm01HgqVrF4SugiwwxYOnbiNdlkQS6SOd6H60FqVA/exec?mode=read";
+
+  fetch(APPS_SCRIPT_URL)
+    .then((response) => response.json())
+    .then((data) => {
+      // data is expected to be an array of objects
+      populateTable(data);
+    })
+    .catch((error) => {
+      console.error("Error fetching data:", error);
+    });
 }
 
-// ✅ Ensures user remains logged in on page reload
-window.onload = function() {
-    if (localStorage.getItem("loggedInUser")) {
-        document.getElementById("login-container").style.display = "none";
-        document.getElementById("dashboard").style.display = "block";
-        fetchData();
-    }
-};
+function populateTable(dataArray) {
+  const tableBody = document.getElementById("tableBody");
+  tableBody.innerHTML = ""; // Clear old rows
 
-// ✅ Fetch data function (ensure your fetch logic is correctly implemented)
-async function fetchData() {
-    console.log("📡 Fetching user data...");
+  dataArray.forEach((rowObj) => {
+    // Create a new row
+    const row = document.createElement("tr");
+
+    // Based on your header structure. 
+    // Must match the columns you want to show.
+    // Make sure these keys match the headers in your sheet!
+    const timestampCell = createCell(rowObj["Timestamp"]);
+    const voltageCell = createCell(rowObj["Voltage"]);
+    const current1Cell = createCell(rowObj["Current(1)"]);
+    const power1Cell = createCell(rowObj["Power(1)"]);
+    const kWh1Cell = createCell(rowObj["Energy(1)"]);
+    const current2Cell = createCell(rowObj["Current(2)"]);
+    const power2Cell = createCell(rowObj["Power(2)"]);
+    const kWh2Cell = createCell(rowObj["Energy(2)"]);
+    const current3Cell = createCell(rowObj["Current(3)"]);
+    const power3Cell = createCell(rowObj["Power(3)"]);
+    const kWh3Cell = createCell(rowObj["Energy(3)"]);
+    const current4Cell = createCell(rowObj["Current(4)"]);
+    const power4Cell = createCell(rowObj["Power(4)"]);
+    const kWh4Cell = createCell(rowObj["Energy(4)"]);
+    const totalConsumptionCell = createCell(rowObj["total_consumption"]);
+    const costCell = createCell(rowObj["cost"]);
+
+    // Append them to the row
+    row.appendChild(timestampCell);
+    row.appendChild(voltageCell);
+    row.appendChild(current1Cell);
+    row.appendChild(power1Cell);
+    row.appendChild(kWh1Cell);
+    row.appendChild(current2Cell);
+    row.appendChild(power2Cell);
+    row.appendChild(kWh2Cell);
+    row.appendChild(current3Cell);
+    row.appendChild(power3Cell);
+    row.appendChild(kWh3Cell);
+    row.appendChild(current4Cell);
+    row.appendChild(power4Cell);
+    row.appendChild(kWh4Cell);
+    row.appendChild(totalConsumptionCell);
+    row.appendChild(costCell);
+
+    // Finally, append the row
+    tableBody.appendChild(row);
+  });
+}
+
+function createCell(textValue) {
+  const td = document.createElement("td");
+  td.textContent = textValue !== undefined ? textValue : "";
+  return td;
 }
