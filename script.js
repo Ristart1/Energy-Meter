@@ -4,7 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const tableBody = document.getElementById("tableBody");
 
   // Replace with your Apps Script Web App URL plus ?mode=read
-  const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwgazaj-Z1zgkcg6k3Rd5ApohNjlwvgQQ5QD7zymL-LlXgGqdUEaESL0dUgKH05ymGZUQ/exec?mode=read";
+  const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbydo4QmUNpQSYKmi8aYOBeNeSYJeaRkgjD8LQ2vRnGLYefI5WCl8Fb9EEiUpQgRdWANmQ/exec?mode=read";
 
   fetchBtn.addEventListener("click", () => {
     statusMessage.textContent = "Fetching data...";
