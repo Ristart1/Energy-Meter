@@ -3,8 +3,8 @@ document.addEventListener("DOMContentLoaded", () => {
   const statusMessage = document.getElementById("statusMessage");
   const tableBody = document.getElementById("tableBody");
 
-  // Replace with your own Apps Script Web App URL (appended ?mode=read)
-  const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyj_rUdKc2V4pKvaH7hSfrkH00Tdam7hRI7loa3O-kaamT_HGYZm1uM-Nlbe7PYEsiRYw/exec?mode=read";
+  // Replace with your Apps Script Web App URL plus ?mode=read
+  const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwgazaj-Z1zgkcg6k3Rd5ApohNjlwvgQQ5QD7zymL-LlXgGqdUEaESL0dUgKH05ymGZUQ/exec?mode=read";
 
   fetchBtn.addEventListener("click", () => {
     statusMessage.textContent = "Fetching data...";
@@ -13,45 +13,52 @@ document.addEventListener("DOMContentLoaded", () => {
 
   function fetchData() {
     fetch(APPS_SCRIPT_URL)
-      .then(response => response.json())
-      .then(data => {
-        // Clear the table body
-        tableBody.innerHTML = "";
-        data.forEach((row) => {
-          const tr = document.createElement("tr");
-
-          // Make sure the keys here match the header row in your sheet exactly
-          tr.appendChild(createCell(row["Timestamp"]));
-          tr.appendChild(createCell(row["Voltage"]));
-          tr.appendChild(createCell(row["Current(1)"]));
-          tr.appendChild(createCell(row["Power(1)"]));
-          tr.appendChild(createCell(row["Energy(1)"]));
-          tr.appendChild(createCell(row["Current(2)"]));
-          tr.appendChild(createCell(row["Power(2)"]));
-          tr.appendChild(createCell(row["Energy(2)"]));
-          tr.appendChild(createCell(row["Current(3)"]));
-          tr.appendChild(createCell(row["Power(3)"]));
-          tr.appendChild(createCell(row["Energy(3)"]));
-          tr.appendChild(createCell(row["Current(4)"]));
-          tr.appendChild(createCell(row["Power(4)"]));
-          tr.appendChild(createCell(row["Energy(4)"]));
-          tr.appendChild(createCell(row["total_consumption"]));
-          tr.appendChild(createCell(row["cost"]));
-
-          tableBody.appendChild(tr);
-        });
+      .then((response) => response.json())
+      .then((data) => {
         statusMessage.textContent = "Data fetched successfully!";
+        populateTable(data);
       })
-      .catch(error => {
+      .catch((error) => {
         console.error("Error fetching data:", error);
         statusMessage.textContent = "Error fetching data.";
       });
   }
 
-  // Helper function to create table cells
-  function createCell(textContent) {
+  function populateTable(dataArray) {
+    tableBody.innerHTML = ""; // clear existing rows
+
+    dataArray.forEach((rowObj) => {
+      const tr = document.createElement("tr");
+
+      // EXACT keys must match your sheet headers
+      tr.appendChild(createCell(rowObj["Timestamp"]));
+      tr.appendChild(createCell(rowObj["Voltage (Vrms)"]));
+      tr.appendChild(createCell(rowObj["Current 1 (Irms)"]));
+      tr.appendChild(createCell(rowObj["PF 1"]));
+      tr.appendChild(createCell(rowObj["Power 1 (W)"]));
+      tr.appendChild(createCell(rowObj["Energy 1 (kWh)"]));
+      tr.appendChild(createCell(rowObj["Current 2 (Irms)"]));
+      tr.appendChild(createCell(rowObj["PF 2"]));
+      tr.appendChild(createCell(rowObj["Power 2 (W)"]));
+      tr.appendChild(createCell(rowObj["Energy 2 (kWh)"]));
+      tr.appendChild(createCell(rowObj["Current 3 (Irms)"]));
+      tr.appendChild(createCell(rowObj["PF 3"]));
+      tr.appendChild(createCell(rowObj["Power 3 (W)"]));
+      tr.appendChild(createCell(rowObj["Energy 3 (kWh)"]));
+      tr.appendChild(createCell(rowObj["Current 4 (Irms)"]));
+      tr.appendChild(createCell(rowObj["PF 4"]));
+      tr.appendChild(createCell(rowObj["Power 4 (W)"]));
+      tr.appendChild(createCell(rowObj["Energy 4 (kWh)"]));
+      tr.appendChild(createCell(rowObj["total consumption"]));
+      tr.appendChild(createCell(rowObj["Total Cost"]));
+
+      tableBody.appendChild(tr);
+    });
+  }
+
+  function createCell(textValue) {
     const td = document.createElement("td");
-    td.textContent = (textContent !== undefined) ? textContent : "";
+    td.textContent = textValue !== undefined ? textValue : "";
     return td;
   }
 });
