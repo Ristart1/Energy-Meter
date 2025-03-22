@@ -22,25 +22,25 @@ document.addEventListener("DOMContentLoaded", () => {
 
           // Make sure the keys here match the header row in your sheet exactly
           tr.appendChild(createCell(rowObj["Timestamp"]));
-      tr.appendChild(createCell(rowObj["Voltage (Vrms)"]));
-      tr.appendChild(createCell(rowObj["Current 1 (Irms)"]));
-      tr.appendChild(createCell(rowObj["PF 1"]));
-      tr.appendChild(createCell(rowObj["Power 1 (W)"]));
-      tr.appendChild(createCell(rowObj["Energy 1 (kWh)"]));
-      tr.appendChild(createCell(rowObj["Current 2 (Irms)"]));
-      tr.appendChild(createCell(rowObj["PF 2"]));
-      tr.appendChild(createCell(rowObj["Power 2 (W)"]));
-      tr.appendChild(createCell(rowObj["Energy 2 (kWh)"]));
-      tr.appendChild(createCell(rowObj["Current 3 (Irms)"]));
-      tr.appendChild(createCell(rowObj["PF 3"]));
-      tr.appendChild(createCell(rowObj["Power 3 (W)"]));
-      tr.appendChild(createCell(rowObj["Energy 3 (kWh)"]));
-      tr.appendChild(createCell(rowObj["Current 4 (Irms)"]));
-      tr.appendChild(createCell(rowObj["PF 4"]));
-      tr.appendChild(createCell(rowObj["Power 4 (W)"]));
-      tr.appendChild(createCell(rowObj["Energy 4 (kWh)"]));
-      tr.appendChild(createCell(rowObj["total consumption"]));
-      tr.appendChild(createCell(rowObj["Total Cost"]));
+          tr.appendChild(createCell(rowObj["Voltage (Vrms)"]));
+          tr.appendChild(createCell(rowObj["Current 1 (Irms)"]));
+          tr.appendChild(createCell(rowObj["PF 1"]));
+          tr.appendChild(createCell(rowObj["Power 1 (W)"]));
+          tr.appendChild(createCell(rowObj["Energy 1 (kWh)"]));
+          tr.appendChild(createCell(rowObj["Current 2 (Irms)"]));
+          tr.appendChild(createCell(rowObj["PF 2"]));
+          tr.appendChild(createCell(rowObj["Power 2 (W)"]));
+          tr.appendChild(createCell(rowObj["Energy 2 (kWh)"]));
+          tr.appendChild(createCell(rowObj["Current 3 (Irms)"]));
+          tr.appendChild(createCell(rowObj["PF 3"]));
+          tr.appendChild(createCell(rowObj["Power 3 (W)"]));
+          tr.appendChild(createCell(rowObj["Energy 3 (kWh)"]));
+          tr.appendChild(createCell(rowObj["Current 4 (Irms)"]));
+          tr.appendChild(createCell(rowObj["PF 4"]));
+          tr.appendChild(createCell(rowObj["Power 4 (W)"]));
+          tr.appendChild(createCell(rowObj["Energy 4 (kWh)"]));
+          tr.appendChild(createCell(rowObj["total consumption"]));
+          tr.appendChild(createCell(rowObj["Total Cost"]));
 
           tableBody.appendChild(tr);
         });
