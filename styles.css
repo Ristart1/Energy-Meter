@@ -5,22 +5,11 @@ body {
 }
 
 #app {
-  max-width: 800px;
+  max-width: 1000px;
   margin: 0 auto;
-  background: white;
+  background: #fff;
   padding: 20px;
   border-radius: 8px;
-}
-
-input {
-  display: block;
-  margin: 10px 0;
-  padding: 8px;
-}
-
-button {
-  padding: 10px 15px;
-  cursor: pointer;
 }
 
 table {
