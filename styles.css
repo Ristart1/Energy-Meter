@@ -12,18 +12,13 @@ body {
   border-radius: 8px;
 }
 
-#fetchBtn {
-  padding: 10px 16px;
-  cursor: pointer;
+table {
+  border-collapse: collapse;
+  width: 100%;
+  margin-top: 20px;
 }
 
-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 1rem;
-}
 th, td {
-  padding: 8px;
-  border: 1px solid #333;
   text-align: left;
+  padding: 8px;
 }
