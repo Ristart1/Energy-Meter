@@ -104,4 +104,4 @@ function fetchAndDisplayData() {
 
 // Fetch immediately, then every 1 second
 fetchAndDisplayData();
-setInterval(fetchAndDisplayData, 1000);
+setInterval(fetchAndDisplayData, 10000);
