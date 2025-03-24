@@ -81,4 +81,4 @@ function fetchAndDisplayData() {
 fetchAndDisplayData();
 
 // Fetch again every 30 seconds (30000 ms)
-setInterval(fetchAndDisplayData, 10000);
+setInterval(fetchAndDisplayData, 3000);
