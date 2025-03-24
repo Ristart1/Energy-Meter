@@ -2,101 +2,43 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Smart Energy Dashboard</title>
-  <!-- Google Charts library -->
-  <script src="https://www.gstatic.com/charts/loader.js"></script>
-  <!-- Link to external CSS -->
+  <title>Smart Energy Meter Dashboard</title>
   <link rel="stylesheet" href="style.css" />
-  <!-- Link to external JS (defer so it runs after HTML is parsed) -->
-  <script src="script.js" defer></script>
 </head>
 <body>
-  <div id="dashboard">
-    <h1>Smart Energy Meter Dashboard</h1>
-    
-    <!-- Current Readings Section -->
-    <section id="current-readings">
-      <h2>Current Readings</h2>
-      <div class="cards">
-        <!-- Circuit 1 Card -->
-        <div class="card circuit">
-          <h3>Circuit 1</h3>
-          <p>Voltage: <span id="v1">--</span> V</p>
-          <p>Current: <span id="i1">--</span> A</p>
-          <p>Power Factor: <span id="pf1">--</span></p>
-          <p>Power: <span id="p1">--</span> W</p>
-          <p>Energy: <span id="e1">--</span> kWh</p>
-          <p>Cost: $<span id="c1">--</span></p>
-        </div>
-        <!-- Circuit 2 Card -->
-        <div class="card circuit">
-          <h3>Circuit 2</h3>
-          <p>Voltage: <span id="v2">--</span> V</p>
-          <p>Current: <span id="i2">--</span> A</p>
-          <p>Power Factor: <span id="pf2">--</span></p>
-          <p>Power: <span id="p2">--</span> W</p>
-          <p>Energy: <span id="e2">--</span> kWh</p>
-          <p>Cost: $<span id="c2">--</span></p>
-        </div>
-        <!-- Circuit 3 Card -->
-        <div class="card circuit">
-          <h3>Circuit 3</h3>
-          <p>Voltage: <span id="v3">--</span> V</p>
-          <p>Current: <span id="i3">--</span> A</p>
-          <p>Power Factor: <span id="pf3">--</span></p>
-          <p>Power: <span id="p3">--</span> W</p>
-          <p>Energy: <span id="e3">--</span> kWh</p>
-          <p>Cost: $<span id="c3">--</span></p>
-        </div>
-        <!-- Circuit 4 Card -->
-        <div class="card circuit">
-          <h3>Circuit 4</h3>
-          <p>Voltage: <span id="v4">--</span> V</p>
-          <p>Current: <span id="i4">--</span> A</p>
-          <p>Power Factor: <span id="pf4">--</span></p>
-          <p>Power: <span id="p4">--</span> W</p>
-          <p>Energy: <span id="e4">--</span> kWh</p>
-          <p>Cost: $<span id="c4">--</span></p>
-        </div>
-        <!-- Total Consumption Card -->
-        <div class="card total">
-          <h3>Total</h3>
-          <p>Power: <span id="total-power">--</span> W</p>
-          <p>Energy: <span id="total-energy">--</span> kWh</p>
-          <p>Cost: $<span id="total-cost">--</span></p>
-        </div>
-      </div>
-    </section>
+  <h1>Smart Energy Meter Dashboard</h1>
+  <div class="square-container">
+    <!-- Circuit 1 -->
+    <div class="square">
+      <h2>Circuit 1</h2>
+      <div id="circuit1-data"></div>
+    </div>
 
-    <!-- Historical Charts Section -->
-    <section id="charts-section">
-      <h2>Historical Trends</h2>
-      <div id="controls">
-        <label for="time-range">View:</label>
-        <select id="time-range">
-          <option value="24hours">Last 24 Hours</option>
-          <option value="7days">Last 7 Days</option>
-          <option value="30days">Last 30 Days</option>
-          <option value="all">All Data</option>
-          <option value="custom">Custom Range</option>
-        </select>
-        <!-- Custom range date inputs (hidden by default) -->
-        <span id="custom-range-controls" style="display:none;">
-          <label for="start-date">From:</label>
-          <input type="date" id="start-date" />
-          <label for="end-date">To:</label>
-          <input type="date" id="end-date" />
-          <button id="applyRange">Apply</button>
-        </span>
-      </div>
-      <div class="charts-grid">
-        <!-- Chart containers -->
-        <div id="chart_line" class="chart"></div>
-        <div id="chart_bar" class="chart"></div>
-        <div id="chart_pie" class="chart"></div>
-      </div>
-    </section>
+    <!-- Circuit 2 -->
+    <div class="square">
+      <h2>Circuit 2</h2>
+      <div id="circuit2-data"></div>
+    </div>
+
+    <!-- Circuit 3 -->
+    <div class="square">
+      <h2>Circuit 3</h2>
+      <div id="circuit3-data"></div>
+    </div>
+
+    <!-- Circuit 4 -->
+    <div class="square">
+      <h2>Circuit 4</h2>
+      <div id="circuit4-data"></div>
+    </div>
+
+    <!-- Total Consumption and Cost -->
+    <div class="square">
+      <h2>Total</h2>
+      <div id="total-data"></div>
+    </div>
   </div>
+  
+  <script src="app.js"></script>
 </body>
 </html>
