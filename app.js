@@ -1,29 +1,41 @@
 // Replace with your published CSV link from Google Sheets
-// Example: 'https://docs.google.com/spreadsheets/d/YOUR_SHEET_ID/export?format=csv&gid=0'
 const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQEAl5IM4a7jpC8heq8feTrKD1lOE3bY2tgkATvgqR_qCqLYvSP65l1tcSsKao9l-LsM98auw4Vg_oh/pub?output=csv';
+
+// Keep track of the last displayed timestamp to avoid flicker
+let lastDisplayedTimestamp = null;
 
 function fetchAndDisplayData() {
   // Append a timestamp to bypass caching
   const noCacheUrl = csvUrl + '&t=' + new Date().getTime();
-  
+
   fetch(noCacheUrl)
     .then(response => response.text())
     .then(csv => {
-      // Split CSV text into rows and map each row to an array of columns
+      // Split CSV text into rows and then into columns
       const rows = csv.trim().split('\n').map(row => row.split(','));
-      
-      // Filter out any rows where the timestamp (column 0) is empty
+
+      // Filter out rows that don't have a valid timestamp (column 0)
       const validRows = rows.filter(row => row[0] && row[0].trim() !== "");
-      
+
       if (validRows.length === 0) {
         console.error('No valid data rows found.');
         return;
       }
-      
-      // The last row in the filtered array is the latest valid row
+
+      // Sort validRows by timestamp (assuming column 0 is parseable by Date)
+      validRows.sort((a, b) => new Date(a[0]) - new Date(b[0]));
+
+      // Get the most recent row
       const lastRow = validRows[validRows.length - 1];
-      
-      // Assuming columns are ordered as:
+      const newTimestamp = lastRow[0];
+
+      // If the new timestamp is not later than the last displayed, don't update.
+      if (lastDisplayedTimestamp && new Date(newTimestamp) <= new Date(lastDisplayedTimestamp)) {
+        return;
+      }
+      lastDisplayedTimestamp = newTimestamp;
+
+      // Expected columns:
       // 0 = Timestamp, 1 = Voltage, 2 = Current1, 3 = PF1, 4 = Power1, 5 = kWh1,
       // 6 = Current2, 7 = PF2, 8 = Power2, 9 = kWh2,
       // 10 = Current3, 11 = PF3, 12 = Power3, 13 = kWh3,
@@ -54,7 +66,7 @@ function fetchAndDisplayData() {
       const totalConsumption = lastRow[18];
       const cost             = lastRow[19];
 
-      // Update each circuit's display with the voltage added
+      // Update display for each circuit with voltage included
       document.getElementById('circuit1-data').innerHTML = `
         <p>Voltage: ${voltage}</p>
         <p>Current: ${current1}</p>
@@ -93,6 +105,6 @@ function fetchAndDisplayData() {
     });
 }
 
-// Fetch immediately, then again every 1 second
+// Fetch immediately, then every 1 second
 fetchAndDisplayData();
 setInterval(fetchAndDisplayData, 1000);
