@@ -107,4 +107,4 @@ function fetchAndDisplayData() {
 fetchAndDisplayData();
 
 // Poll every 30 seconds for new data
-setInterval(fetchAndDisplayData, 5000);
+setInterval(fetchAndDisplayData, 1000);
