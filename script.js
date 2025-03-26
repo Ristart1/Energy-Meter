@@ -72,4 +72,4 @@ async function fetchData() {
 
 // Fetch data immediately and then every 10 seconds
 fetchData();
-setInterval(fetchData, 10000);
+setInterval(fetchData, 1000);
