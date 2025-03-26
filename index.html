@@ -1,44 +1,56 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Smart Energy Meter Dashboard</title>
-  <link rel="stylesheet" href="style.css" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Smart Energy Monitoring Dashboard</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-  <h1>Smart Energy Meter Dashboard</h1>
-  <div class="square-container">
+  <h1>Smart Energy Monitoring Dashboard</h1>
+  <p id="alert" class="alert"></p>
+  
+  <div class="grid-container">
     <!-- Circuit 1 -->
-    <div class="square">
+    <div class="square" id="circuit1">
       <h2>Circuit 1</h2>
-      <div id="circuit1-data"></div>
+      <p><strong>Current:</strong> <span id="current1">--</span> A</p>
+      <p><strong>Power Factor:</strong> <span id="pf1">--</span></p>
+      <p><strong>Power:</strong> <span id="power1">--</span> W</p>
+      <p><strong>Energy:</strong> <span id="energy1">--</span> kWh</p>
     </div>
-
     <!-- Circuit 2 -->
-    <div class="square">
+    <div class="square" id="circuit2">
       <h2>Circuit 2</h2>
-      <div id="circuit2-data"></div>
+      <p><strong>Current:</strong> <span id="current2">--</span> A</p>
+      <p><strong>Power Factor:</strong> <span id="pf2">--</span></p>
+      <p><strong>Power:</strong> <span id="power2">--</span> W</p>
+      <p><strong>Energy:</strong> <span id="energy2">--</span> kWh</p>
     </div>
-
     <!-- Circuit 3 -->
-    <div class="square">
+    <div class="square" id="circuit3">
       <h2>Circuit 3</h2>
-      <div id="circuit3-data"></div>
+      <p><strong>Current:</strong> <span id="current3">--</span> A</p>
+      <p><strong>Power Factor:</strong> <span id="pf3">--</span></p>
+      <p><strong>Power:</strong> <span id="power3">--</span> W</p>
+      <p><strong>Energy:</strong> <span id="energy3">--</span> kWh</p>
     </div>
-
     <!-- Circuit 4 -->
-    <div class="square">
+    <div class="square" id="circuit4">
       <h2>Circuit 4</h2>
-      <div id="circuit4-data"></div>
+      <p><strong>Current:</strong> <span id="current4">--</span> A</p>
+      <p><strong>Power Factor:</strong> <span id="pf4">--</span></p>
+      <p><strong>Power:</strong> <span id="power4">--</span> W</p>
+      <p><strong>Energy:</strong> <span id="energy4">--</span> kWh</p>
     </div>
-
     <!-- Total Consumption and Cost -->
-    <div class="square">
-      <h2>Total</h2>
-      <div id="total-data"></div>
+    <div class="square" id="total">
+      <h2>Total Consumption</h2>
+      <p><strong>Total Consumption:</strong> <span id="totalConsumption">--</span> kWh</p>
+      <p><strong>Total Cost:</strong> <span id="cost">--</span></p>
     </div>
   </div>
-  
-  <script src="app.js"></script>
+
+  <script src="script.js"></script>
 </body>
 </html>
