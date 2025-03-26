@@ -1,5 +1,5 @@
 // Replace the URL below with your own deployed Google Apps Script URL
-const SHEET_URL = "https://script.google.com/macros/s/AKfycbw28wEC2jBOf9-D-qv6KxH_bj4XUoE5fqDzhm06tD-JTpgTDWsSR3_RkGCwaBpWQapg1A/exec";
+const SHEET_URL = "https://script.google.com/macros/s/AKfycbwgL_5t52LO4gzbHVgczfHhD8uB8MgYnE0wIgAVg6pBx2jFdzFIpLPEO9rahuEVQcGhFg/exec";
 
 async function fetchData() {
   try {
