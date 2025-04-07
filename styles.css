@@ -41,3 +41,83 @@ h1 {
   font-size: 18px;
   margin: 5px 0;
 }
+
+/* Modal overlay (covers entire screen when visible) */
+.modal {
+  display: none;                  /* Hidden by default */
+  position: fixed;
+  z-index: 1000;
+  left: 0; top: 0;
+  width: 100%; height: 100%;
+  background: rgba(0, 0, 0, 0.5); /* translucent dark backdrop */
+  align-items: center;
+  justify-content: center;
+}
+
+/* Modal content box */
+.modal-content {
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  width: 90%;
+  max-width: 800px;
+  position: relative;
+  text-align: left;  /* Align text to left inside modal (override body center) */
+}
+
+/* Close (X) button */
+.modal-content .close {
+  position: absolute;
+  top: 10px; right: 15px;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* Modal title */
+.modal-content h2 {
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: 20px;
+}
+
+/* Form labels and inputs in modal */
+.modal-content label {
+  display: block;
+  margin: 10px 0;
+  font-weight: bold;
+}
+.modal-content input[type="date"] {
+  margin-left: 5px;
+  padding: 5px;
+  font-size: 16px;
+}
+
+/* Generate Report button styling */
+.modal-content #generateReport {
+  display: block;
+  margin: 15px 0;
+  padding: 10px 20px;
+  font-size: 16px;
+  background: #007BFF;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.modal-content #generateReport:hover {
+  background: #005dc1;
+}
+
+/* Ensure canvases (charts) are responsive */
+.modal-content canvas {
+  width: 100% !important;
+  max-height: 400px;
+  margin: 20px 0;
+}
+
+/* Summary section styles */
+#summary p {
+  font-size: 18px;
+  margin: 5px 0;
+}
