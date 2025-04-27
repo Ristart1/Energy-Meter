@@ -5,27 +5,68 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Smart Energy Monitoring Dashboard</title>
   <link rel="stylesheet" href="styles.css" />
-  <!-- Include Chart.js library -->
+  <!-- Include Chart.js -->
   <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
   <h1>Smart Energy Monitoring Dashboard</h1>
   <p id="alert" class="alert"></p>
-  
-  <!-- Period Report Trigger Button -->
+
+  <!-- Period Report Trigger -->
   <button id="openReportBtn">Period Report</button>
 
   <div class="grid-container">
-    <!-- … existing circuit & total squares … -->
+    <!-- Circuit 1 -->
+    <div class="square" id="circuit1">
+      <h2>Circuit 1</h2>
+      <p><strong>Voltage:</strong> <span id="voltage1">--</span> V</p>
+      <p><strong>Current:</strong> <span id="current1">--</span> A</p>
+      <p><strong>Power Factor:</strong> <span id="pf1">--</span></p>
+      <p><strong>Power:</strong> <span id="power1">--</span> W</p>
+      <p><strong>Energy:</strong> <span id="energy1">--</span> kWh</p>
+    </div>
+    <!-- Circuit 2 -->
+    <div class="square" id="circuit2">
+      <h2>Circuit 2</h2>
+      <p><strong>Voltage:</strong> <span id="voltage2">--</span> V</p>
+      <p><strong>Current:</strong> <span id="current2">--</span> A</p>
+      <p><strong>Power Factor:</strong> <span id="pf2">--</span></p>
+      <p><strong>Power:</strong> <span id="power2">--</span> W</p>
+      <p><strong>Energy:</strong> <span id="energy2">--</span> kWh</p>
+    </div>
+    <!-- Circuit 3 -->
+    <div class="square" id="circuit3">
+      <h2>Circuit 3</h2>
+      <p><strong>Voltage:</strong> <span id="voltage3">--</span> V</p>
+      <p><strong>Current:</strong> <span id="current3">--</span> A</p>
+      <p><strong>Power Factor:</strong> <span id="pf3">--</span></p>
+      <p><strong>Power:</strong> <span id="power3">--</span> W</p>
+      <p><strong>Energy:</strong> <span id="energy3">--</span> kWh</p>
+    </div>
+    <!-- Circuit 4 -->
+    <div class="square" id="circuit4">
+      <h2>Circuit 4</h2>
+      <p><strong>Voltage:</strong> <span id="voltage4">--</span> V</p>
+      <p><strong>Current:</strong> <span id="current4">--</span> A</p>
+      <p><strong>Power Factor:</strong> <span id="pf4">--</span></p>
+      <p><strong>Power:</strong> <span id="power4">--</span> W</p>
+      <p><strong>Energy:</strong> <span id="energy4">--</span> kWh</p>
+    </div>
+    <!-- Total Consumption -->
+    <div class="square" id="total">
+      <h2>Total Consumption</h2>
+      <p><strong>Total Consumption:</strong> <span id="totalConsumption">--</span> kWh</p>
+      <p><strong>Total Cost:</strong> <span id="cost">--</span></p>
+    </div>
   </div>
 
   <!-- Period Report Modal -->
   <div id="periodModal" class="modal">
     <div class="modal-content">
-      <!-- Close button -->
       <span id="closeModal" class="close">&times;</span>
       <h2>Period Report</h2>
-      <!-- Date range selection -->
+
+      <!-- Date Pickers -->
       <label for="startDate">Start Date:
         <input type="date" id="startDate" />
       </label>
@@ -33,31 +74,32 @@
         <input type="date" id="endDate" />
       </label>
       <button id="generateReport">Generate Report</button>
-      <!-- Placeholder for messages -->
       <p id="reportMsg" class="alert"></p>
+
       <!-- Charts -->
       <canvas id="chartCircuits"></canvas>
       <canvas id="chartTotal"></canvas>
-      <!-- Summary section -->
+
+      <!-- Summary -->
       <div id="summary">
         <p>
           <strong>Peak Energy at Circuit 1:</strong>
-          <span id="peak1Value">--</span> kWh at 
+          <span id="peak1Value">--</span> kWh at
           <span id="peak1Time">--</span>
         </p>
         <p>
           <strong>Peak Energy at Circuit 2:</strong>
-          <span id="peak2Value">--</span> kWh at 
+          <span id="peak2Value">--</span> kWh at
           <span id="peak2Time">--</span>
         </p>
         <p>
           <strong>Peak Energy at Circuit 3:</strong>
-          <span id="peak3Value">--</span> kWh at 
+          <span id="peak3Value">--</span> kWh at
           <span id="peak3Time">--</span>
         </p>
         <p>
           <strong>Peak Energy at Circuit 4:</strong>
-          <span id="peak4Value">--</span> kWh at 
+          <span id="peak4Value">--</span> kWh at
           <span id="peak4Time">--</span>
         </p>
         <p>
