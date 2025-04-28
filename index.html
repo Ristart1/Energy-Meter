@@ -24,6 +24,7 @@
       <p><strong>Power Factor:</strong> <span id="pf1">--</span></p>
       <p><strong>Power:</strong> <span id="power1">--</span> W</p>
       <p><strong>Energy:</strong> <span id="energy1">--</span> kWh</p>
+      <p id="warn1" class="alert warning"></p>
     </div>
     <!-- Circuit 2 -->
     <div class="square" id="circuit2">
@@ -33,6 +34,7 @@
       <p><strong>Power Factor:</strong> <span id="pf2">--</span></p>
       <p><strong>Power:</strong> <span id="power2">--</span> W</p>
       <p><strong>Energy:</strong> <span id="energy2">--</span> kWh</p>
+      <p id="warn2" class="alert warning"></p>
     </div>
     <!-- Circuit 3 -->
     <div class="square" id="circuit3">
@@ -42,6 +44,7 @@
       <p><strong>Power Factor:</strong> <span id="pf3">--</span></p>
       <p><strong>Power:</strong> <span id="power3">--</span> W</p>
       <p><strong>Energy:</strong> <span id="energy3">--</span> kWh</p>
+      <p id="warn3" class="alert warning"></p>
     </div>
     <!-- Circuit 4 -->
     <div class="square" id="circuit4">
@@ -51,6 +54,7 @@
       <p><strong>Power Factor:</strong> <span id="pf4">--</span></p>
       <p><strong>Power:</strong> <span id="power4">--</span> W</p>
       <p><strong>Energy:</strong> <span id="energy4">--</span> kWh</p>
+      <p id="warn4" class="alert warning"></p>
     </div>
     <!-- Total Consumption -->
     <div class="square" id="total">
@@ -60,13 +64,12 @@
     </div>
   </div>
 
-  <!-- Period Report Modal -->
+  <!-- Period Report Modal (unchanged) -->
   <div id="periodModal" class="modal">
     <div class="modal-content">
       <span id="closeModal" class="close">&times;</span>
       <h2>Period Report</h2>
 
-      <!-- Date Pickers -->
       <label for="startDate">Start Date:
         <input type="date" id="startDate" />
       </label>
@@ -76,11 +79,9 @@
       <button id="generateReport">Generate Report</button>
       <p id="reportMsg" class="alert"></p>
 
-      <!-- Charts -->
       <canvas id="chartCircuits"></canvas>
       <canvas id="chartTotal"></canvas>
 
-      <!-- Summary -->
       <div id="summary">
         <p>
           <strong>Peak Energy at Circuit 1:</strong>
@@ -102,7 +103,6 @@
           <span id="peak4Value">--</span> kWh at
           <span id="peak4Time">--</span>
         </p>
-        <!-- Average line removed -->
       </div>
     </div>
   </div>
