@@ -1,15 +1,18 @@
+// URL for Google Apps Script (CSV mode)
 const SHEET_URL = "https://script.google.com/macros/s/AKfycbwgL_5t52LO4gzbHVgczfHhD8uB8MgYnE0wIgAVg6pBx2jFdzFIpLPEO9rahuEVQcGhFg/exec?mode=fetch";
 
-// Real-time dashboard update
+// === Real-time Dashboard Update ===
 async function fetchData() {
   try {
-    const res = await fetch(SHEET_URL);
-    const text = await res.text();
-    const rows = text.trim().split("\n");
+    const res   = await fetch(SHEET_URL);
+    const text  = await res.text();
+    const rows  = text.trim().split("\n");
     if (rows.length < 2) return;
-    const latest = rows.slice(1).map(r => r.split(",")).pop();
+    // Parse CSV rows into arrays
+    const data  = rows.slice(1).map(r => r.split(","));
+    const latest = data[data.length - 1];
 
-    // Circuit 1
+    // Update Circuit 1
     document.getElementById("voltage1").innerText = latest[1];
     document.getElementById("current1").innerText = latest[2];
     document.getElementById("pf1")     .innerText = latest[3];
@@ -37,44 +40,55 @@ async function fetchData() {
     document.getElementById("power4")  .innerText = latest[16];
     document.getElementById("energy4") .innerText = latest[17];
 
-    // Total
+    // Total consumption & cost
     document.getElementById("totalConsumption").innerText = latest[18];
     document.getElementById("cost")            .innerText = "﷼" + latest[19];
 
-    // Optional alert
-    const currents = [2,6,10,14].map(i => parseFloat(latest[i]));
+    // Global high-current alert (if any circuit > 10 A)
+    const globalCurrents = [2, 6, 10, 14].map(i => parseFloat(latest[i]));
     document.getElementById("alert").innerText =
-      currents.some(c => c > 10) ? "⚠️ High Current Detected!" : "";
+      globalCurrents.some(c => c > 10) ? "⚠️ High Current Detected!" : "";
+
+    // === New: Per-circuit warnings at ≥ 4 A ===
+    globalCurrents.forEach((val, idx) => {
+      const warnEl = document.getElementById(`warn${idx+1}`);
+      warnEl.innerText = (val >= 4) ? "High Current is detected" : "";
+    });
+
   } catch (err) {
-    console.error("Fetch error:", err);
+    console.error("Error fetching data:", err);
   }
 }
 
+// Initial fetch & periodic updates
 fetchData();
 setInterval(fetchData, 10000);
 
-// Period Report modal controls
+// === Period Report Modal Logic ===
 const modal       = document.getElementById("periodModal");
 const openBtn     = document.getElementById("openReportBtn");
 const closeBtn    = document.getElementById("closeModal");
 const generateBtn = document.getElementById("generateReport");
 const msgEl       = document.getElementById("reportMsg");
-let circuitChart, totalChart;
+let circuitChart = null, totalChart = null;
 
+// Open modal
 openBtn.addEventListener("click", () => {
   modal.style.display = "flex";
   msgEl.innerText = "";
 });
+// Close modal
 closeBtn.addEventListener("click", closeModal);
-window.addEventListener("click", e => { if (e.target === modal) closeModal(); });
-
+window.addEventListener("click", e => {
+  if (e.target === modal) closeModal();
+});
 function closeModal() {
   modal.style.display = "none";
   circuitChart?.destroy();
   totalChart?.destroy();
 }
 
-// Fetch all historical data
+// Fetch all historical data as array of records
 async function fetchHistoricalData() {
   const res = await fetch(SHEET_URL);
   const text = await res.text();
@@ -84,19 +98,19 @@ async function fetchHistoricalData() {
     const c = line.split(",");
     return {
       date:    new Date(c[0]),
-      energy1: +c[5],
-      energy2: +c[9],
-      energy3: +c[13],
-      energy4: +c[17],
-      power1:  +c[4],
-      power2:  +c[8],
-      power3:  +c[12],
-      power4:  +c[16]
+      energy1: parseFloat(c[5]),
+      energy2: parseFloat(c[9]),
+      energy3: parseFloat(c[13]),
+      energy4: parseFloat(c[17]),
+      power1:  parseFloat(c[4]),
+      power2:  parseFloat(c[8]),
+      power3:  parseFloat(c[12]),
+      power4:  parseFloat(c[16])
     };
   });
 }
 
-// Helpers
+// Helper: format Date → "YYYY-MM-DD HH:MM"
 function formatDate(d) {
   const Y = d.getFullYear(),
         M = String(d.getMonth()+1).padStart(2,"0"),
@@ -106,11 +120,12 @@ function formatDate(d) {
   return `${Y}-${M}-${D} ${h}:${m}`;
 }
 
+// Filter by inclusive date range
 function filterData(data, start, end) {
   return data.filter(r => r.date >= start && r.date <= end);
 }
 
-// Draw charts
+// Render the two line charts
 function renderCharts(data) {
   const labels = data.map(r => formatDate(r.date));
   const e1 = data.map(r => r.energy1),
@@ -119,8 +134,6 @@ function renderCharts(data) {
         e4 = data.map(r => r.energy4);
 
   circuitChart?.destroy();
-  totalChart?.destroy();
-
   circuitChart = new Chart(
     document.getElementById("chartCircuits").getContext("2d"), {
       type: 'line',
@@ -133,11 +146,15 @@ function renderCharts(data) {
       options:{
         responsive:true,
         plugins:{ title:{ display:true, text:'Energy Consumption per Circuit' } },
-        scales:{ x:{ title:{ display:true, text:'Time' } }, y:{ title:{ display:true, text:'Energy (kWh)' } } }
+        scales:{
+          x:{ title:{ display:true, text:'Time' } },
+          y:{ title:{ display:true, text:'Energy (kWh)' } }
+        }
       }
     }
   );
 
+  totalChart?.destroy();
   const totalE = e1.map((_,i) => e1[i]+e2[i]+e3[i]+e4[i]);
   totalChart = new Chart(
     document.getElementById("chartTotal").getContext("2d"), {
@@ -148,13 +165,16 @@ function renderCharts(data) {
       options:{
         responsive:true,
         plugins:{ title:{ display:true, text:'Total Energy Consumption' } },
-        scales:{ x:{ title:{ display:true, text:'Time' } }, y:{ title:{ display:true, text:'Energy (kWh)' } } }
+        scales:{
+          x:{ title:{ display:true, text:'Time' } },
+          y:{ title:{ display:true, text:'Energy (kWh)' } }
+        }
       }
     }
   );
 }
 
-// Compute per-circuit peaks
+// Render per-circuit peaks
 function renderSummary(data) {
   const peak1 = data.reduce((m,r)=>r.energy1>m.energy1?r:m, data[0]);
   const peak2 = data.reduce((m,r)=>r.energy2>m.energy2?r:m, data[0]);
@@ -171,7 +191,7 @@ function renderSummary(data) {
   document.getElementById("peak4Time") .innerText = formatDate(peak4.date);
 }
 
-// Generate report
+// Generate the period report
 generateBtn.addEventListener("click", async () => {
   const sv = document.getElementById("startDate").value,
         ev = document.getElementById("endDate").value;
