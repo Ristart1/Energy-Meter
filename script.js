@@ -1,21 +1,59 @@
 const SHEET_URL = "https://script.google.com/macros/s/AKfycbwgL_5t52LO4gzbHVgczfHhD8uB8MgYnE0wIgAVg6pBx2jFdzFIpLPEO9rahuEVQcGhFg/exec?mode=fetch";
 
-// Real-time update (unchanged) ...
+// Real-time dashboard update
 async function fetchData() {
   try {
     const res = await fetch(SHEET_URL);
-    const rows = (await res.text()).trim().split("\n");
+    const text = await res.text();
+    const rows = text.trim().split("\n");
     if (rows.length < 2) return;
     const latest = rows.slice(1).map(r => r.split(",")).pop();
-    // ... update dashboard elements ...
-  } catch (e) {
-    console.error(e);
+
+    // Circuit 1
+    document.getElementById("voltage1").innerText = latest[1];
+    document.getElementById("current1").innerText = latest[2];
+    document.getElementById("pf1")     .innerText = latest[3];
+    document.getElementById("power1")  .innerText = latest[4];
+    document.getElementById("energy1") .innerText = latest[5];
+
+    // Circuit 2
+    document.getElementById("voltage2").innerText = latest[1];
+    document.getElementById("current2").innerText = latest[6];
+    document.getElementById("pf2")     .innerText = latest[7];
+    document.getElementById("power2")  .innerText = latest[8];
+    document.getElementById("energy2") .innerText = latest[9];
+
+    // Circuit 3
+    document.getElementById("voltage3").innerText = latest[1];
+    document.getElementById("current3").innerText = latest[10];
+    document.getElementById("pf3")     .innerText = latest[11];
+    document.getElementById("power3")  .innerText = latest[12];
+    document.getElementById("energy3") .innerText = latest[13];
+
+    // Circuit 4
+    document.getElementById("voltage4").innerText = latest[1];
+    document.getElementById("current4").innerText = latest[14];
+    document.getElementById("pf4")     .innerText = latest[15];
+    document.getElementById("power4")  .innerText = latest[16];
+    document.getElementById("energy4") .innerText = latest[17];
+
+    // Total
+    document.getElementById("totalConsumption").innerText = latest[18];
+    document.getElementById("cost")            .innerText = "﷼" + latest[19];
+
+    // Optional alert
+    const currents = [2,6,10,14].map(i => parseFloat(latest[i]));
+    document.getElementById("alert").innerText =
+      currents.some(c => c > 10) ? "⚠️ High Current Detected!" : "";
+  } catch (err) {
+    console.error("Fetch error:", err);
   }
 }
+
 fetchData();
 setInterval(fetchData, 10000);
 
-// Modal controls
+// Period Report modal controls
 const modal       = document.getElementById("periodModal");
 const openBtn     = document.getElementById("openReportBtn");
 const closeBtn    = document.getElementById("closeModal");
@@ -36,10 +74,11 @@ function closeModal() {
   totalChart?.destroy();
 }
 
-// Fetch and parse historical data
+// Fetch all historical data
 async function fetchHistoricalData() {
   const res = await fetch(SHEET_URL);
-  const rows = (await res.text()).trim().split("\n");
+  const text = await res.text();
+  const rows = text.trim().split("\n");
   if (rows.length < 2) return [];
   return rows.slice(1).map(line => {
     const c = line.split(",");
@@ -57,6 +96,7 @@ async function fetchHistoricalData() {
   });
 }
 
+// Helpers
 function formatDate(d) {
   const Y = d.getFullYear(),
         M = String(d.getMonth()+1).padStart(2,"0"),
@@ -70,7 +110,7 @@ function filterData(data, start, end) {
   return data.filter(r => r.date >= start && r.date <= end);
 }
 
-// Charts
+// Draw charts
 function renderCharts(data) {
   const labels = data.map(r => formatDate(r.date));
   const e1 = data.map(r => r.energy1),
@@ -114,7 +154,7 @@ function renderCharts(data) {
   );
 }
 
-// Summary: per-circuit peaks only
+// Compute per-circuit peaks
 function renderSummary(data) {
   const peak1 = data.reduce((m,r)=>r.energy1>m.energy1?r:m, data[0]);
   const peak2 = data.reduce((m,r)=>r.energy2>m.energy2?r:m, data[0]);
