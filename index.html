@@ -24,6 +24,7 @@
       <p><strong>Power Factor:</strong> <span id="pf1">--</span></p>
       <p><strong>Power:</strong> <span id="power1">--</span> W</p>
       <p><strong>Energy:</strong> <span id="energy1">--</span> kWh</p>
+      <!-- Per-circuit warning -->
       <p id="warn1" class="alert warning"></p>
     </div>
     <!-- Circuit 2 -->
@@ -64,12 +65,13 @@
     </div>
   </div>
 
-  <!-- Period Report Modal (unchanged) -->
+  <!-- Period Report Modal -->
   <div id="periodModal" class="modal">
     <div class="modal-content">
       <span id="closeModal" class="close">&times;</span>
       <h2>Period Report</h2>
 
+      <!-- Date Pickers -->
       <label for="startDate">Start Date:
         <input type="date" id="startDate" />
       </label>
@@ -79,9 +81,11 @@
       <button id="generateReport">Generate Report</button>
       <p id="reportMsg" class="alert"></p>
 
+      <!-- Charts -->
       <canvas id="chartCircuits"></canvas>
       <canvas id="chartTotal"></canvas>
 
+      <!-- Summary -->
       <div id="summary">
         <p>
           <strong>Peak Energy at Circuit 1:</strong>
