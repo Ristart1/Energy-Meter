@@ -52,7 +52,7 @@ async function fetchData() {
     // === New: Per-circuit warnings at ≥ 4 A ===
     globalCurrents.forEach((val, idx) => {
       const warnEl = document.getElementById(`warn${idx+1}`);
-      warnEl.innerText = (val >= 4) ? "High Current is detected" : "";
+      warnEl.innerText = (val >= 2) ? "High Current is detected" : "";
     });
 
   } catch (err) {
