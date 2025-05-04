@@ -49,7 +49,7 @@ async function fetchData() {
     document.getElementById("alert").innerText =
       globalCurrents.some(c => c > 10) ? "⚠️ High Current Detected!" : "";
 
-   // === Per-circuit warnings at ≥ 2 A (was 4 A) ===
+    // === New: Per-circuit warnings at ≥ 4 A ===
     globalCurrents.forEach((val, idx) => {
       const warnEl = document.getElementById(`warn${idx+1}`);
       warnEl.innerText = (val >= 4) ? "High Current is detected" : "";
