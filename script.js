@@ -62,7 +62,7 @@ async function fetchData() {
 
 // Initial fetch & periodic updates
 fetchData();
-setInterval(fetchData, 10000);
+setInterval(fetchData, 1000);
 
 // === Period Report Modal Logic ===
 const modal       = document.getElementById("periodModal");
