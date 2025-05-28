@@ -44,12 +44,9 @@ async function fetchData() {
     document.getElementById("totalConsumption").innerText = latest[18];
     document.getElementById("cost")            .innerText = "﷼" + latest[19];
 
-    // Global high-current alert (if any circuit > 10 A)
-    const globalCurrents = [2, 6, 10, 14].map(i => parseFloat(latest[i]));
-    document.getElementById("alert").innerText =
-      globalCurrents.some(c => c > 10) ? "⚠️ High Current Detected!" : "";
+   
 
-    // === New: Per-circuit warnings at ≥ 4 A ===
+    // Per-circuit warnings at ≥ 4 A ===
     globalCurrents.forEach((val, idx) => {
       const warnEl = document.getElementById(`warn${idx+1}`);
       warnEl.innerText = (val >= 2) ? "High Current is detected" : "";
